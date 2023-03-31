@@ -1,0 +1,7 @@
+.element__note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 25px;
+    padding: 22px 20px;
+}

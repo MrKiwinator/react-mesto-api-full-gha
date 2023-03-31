@@ -1,0 +1,9 @@
+.burger-menu_active {
+    display: none;
+}
+
+@media screen and (max-width: 519px) {
+    .burger-menu_active {
+        display: block;
+    }
+}

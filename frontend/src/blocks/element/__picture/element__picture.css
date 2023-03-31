@@ -1,0 +1,9 @@
+.element__picture {
+    display: block;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+    height: 282px;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}

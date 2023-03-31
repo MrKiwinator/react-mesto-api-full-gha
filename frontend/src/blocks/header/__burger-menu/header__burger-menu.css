@@ -1,0 +1,13 @@
+.header__burger-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.header__burger-menu:hover {
+    opacity: .6;
+}

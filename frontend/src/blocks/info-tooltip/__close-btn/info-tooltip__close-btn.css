@@ -1,0 +1,31 @@
+.info-tooltip__close-btn {
+    position: absolute;
+    padding: 0;
+    right: -40px;
+    top: -40px;
+    max-width: 32px;
+    width: 100%;
+    max-height: 32px;
+    height: 100%;
+    border: 0;
+    background-image: url("../../../images/close-icon.svg");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.info-tooltip__close-btn:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 599px) {
+    .info-tooltip__close-btn {
+        max-width: 20px;
+        max-height: 20px;
+        top: -36px;
+        right: 0;
+    }
+}
