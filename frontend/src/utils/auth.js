@@ -5,7 +5,6 @@ class Auth {
 
     _checkResponse(res) {
         if (res.ok) {
-            console.log(res);
             return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
@@ -47,7 +46,13 @@ class Auth {
             },
             body: JSON.stringify({ userId }),
         })
-            .then(this._checkResponse)
+            .then((res) => {
+                if (res.ok) {
+                    localStorage.removeItem("userId");
+                    return;
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
     }
 }
 

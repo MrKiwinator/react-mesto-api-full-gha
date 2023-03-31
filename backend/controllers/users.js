@@ -92,13 +92,7 @@ const logout = (req, res, next) => {
         .clearCookie('jwt')
         .end();
     })
-    .catch((err) => {
-      if (err.name === 'UnauthorizedError') {
-        next(unauthorizedError);
-        return;
-      }
-      next(internalError);
-    });
+    .catch(() => next(internalError));
 };
 
 // Get current user:

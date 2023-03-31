@@ -287,15 +287,20 @@ function App() {
 
     // ======= User logout: =======
 
-    const handleLogout = () => {
-        auth.logout(localStorage.userId)
+    const handleLogout = (e) => {
+        // localStorage.removeItem("userId");
+        e.preventDefault();
+
+        auth.logout(currentUser._id)
             .then(() => {
-                navigate("/sign-in", {replace: true});
                 setBurgerMenuOpen(false);
                 setLoggedIn(false);
+                navigate("/sign-in", {replace: true});
             })
-            .catch((err) => console.log(err));
-        localStorage.removeItem("userId");
+            .catch(() => {
+                setTooltipStatus("failed");
+                setInfoTooltipOpen(true);
+            })
     }
         
 
