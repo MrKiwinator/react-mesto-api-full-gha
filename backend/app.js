@@ -26,7 +26,7 @@ app.use(cors({
   credentials: true,
   origin: [
     'http://localhost:3001',
-    'https://http://mesto-service.nomoredomains.work',
+    'https://mesto-service.nomoredomains.work',
   ],
   maxAge: 60,
 }));
