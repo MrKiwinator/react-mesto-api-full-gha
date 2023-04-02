@@ -105,6 +105,7 @@ function App() {
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getCards()])
             .then(([userInfo, cards]) => {
+                console.log(cards);
                 setCurrentUser(userInfo);
                 setCards(cards);
                 setUserEmail(userInfo.email);
