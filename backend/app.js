@@ -16,11 +16,11 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 app.use(cors({
-  credentials: true,
   origin: [
     'http://localhost:3001',
-    'https://mesto-service.nomoredomains.work',
+    'https://mesto-service.nomoredomains.work/',
   ],
+  credentials: true,
   maxAge: 60,
 }));
 
