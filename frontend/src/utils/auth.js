@@ -38,7 +38,7 @@ class Auth {
     };
 
     logout(userId) {
-        return fetch(`${this._url}/logout`, {
+        return fetch(`${this._url}/logou`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -48,7 +48,6 @@ class Auth {
         })
             .then((res) => {
                 if (res.ok) {
-                    localStorage.removeItem("userId");
                     return;
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);

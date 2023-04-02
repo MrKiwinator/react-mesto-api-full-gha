@@ -95,7 +95,7 @@ function App() {
         // getting userId from the localStorage:
         const userId = localStorage.getItem('userId');
 
-        // if userId exist let user to pass:
+        // if userId exist let user to pass auth:
         if (userId) {
             setLoggedIn(true);
             navigate("/", {replace: true});
@@ -105,7 +105,6 @@ function App() {
         if (loggedIn) {
             Promise.all([api.getUserInfo(), api.getCards()])
             .then(([userInfo, cards]) => {
-
                 setCurrentUser(userInfo);
                 setCards(cards);
                 setUserEmail(userInfo.email);
@@ -288,7 +287,6 @@ function App() {
     // ======= User logout: =======
 
     const handleLogout = (e) => {
-        // localStorage.removeItem("userId");
         e.preventDefault();
 
         auth.logout(currentUser._id)
@@ -301,26 +299,12 @@ function App() {
                 setTooltipStatus("failed");
                 setInfoTooltipOpen(true);
             })
+            .finally(() => {
+                // removing userId from localStorage in any case
+                // to prevent situation when user want to logout but can not do so
+                localStorage.removeItem("userId");
+            })
     }
-        
-
-    // ======= Check token: =======
-
-    // const checkToken = () => {
-    //     const userId = localStorage.getItem('userId');
-
-    //     if (userId) {
-    //         auth.getToken(userId)
-    //             .then((res) => {
-    //                 if (res) {
-    //                     setUserEmail(res.email);
-    //                     setLoggedIn(true);
-    //                     navigate("/", {replace: true});
-    //                 }
-    //             })
-    //             .catch((err) => console.log(err))
-    //     }
-    // }
 
     // =====================//////////==========================
 
