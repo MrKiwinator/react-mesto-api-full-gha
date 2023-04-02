@@ -290,20 +290,10 @@ function App() {
         e.preventDefault();
 
         auth.logout(currentUser._id)
-            .then(() => {
-                setBurgerMenuOpen(false);
-                setLoggedIn(false);
-                navigate("/sign-in", {replace: true});
-            })
-            .catch(() => {
-                setTooltipStatus("failed");
-                setInfoTooltipOpen(true);
-            })
-            .finally(() => {
-                // removing userId from localStorage in any case
-                // to prevent situation when user want to logout but can not do so
-                localStorage.removeItem("userId");
-            })
+        setBurgerMenuOpen(false);
+        setLoggedIn(false);
+        navigate("/sign-in", {replace: true});
+        localStorage.removeItem("userId");
     }
 
     // =====================//////////==========================
