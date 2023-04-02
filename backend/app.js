@@ -15,13 +15,6 @@ const app = express();
 // listening port 3000
 const { PORT = 3000 } = process.env;
 
-// connecting to the Mongo server
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
-  useNewUrlParser: true,
-  // useCreateIndex: true,
-  // useFindAndModify: false,
-});
-
 app.use(cors({
   credentials: true,
   origin: [
@@ -30,6 +23,13 @@ app.use(cors({
   ],
   maxAge: 60,
 }));
+
+// connecting to the Mongo server
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+  useNewUrlParser: true,
+  // useCreateIndex: true,
+  // useFindAndModify: false,
+});
 
 app.use(express.json());
 
