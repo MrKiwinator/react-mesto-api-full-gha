@@ -55,6 +55,6 @@ class Auth {
     }
 }
 
-const auth = new Auth ("http://localhost:3000");
+const auth = new Auth ("https://api.mesto-service.nomoredomains.work"); //"http://localhost:3000"
 
 export default auth;
