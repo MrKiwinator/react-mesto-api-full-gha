@@ -15,6 +15,8 @@ const userNotFoundError = new NotFoundError('Пользователь по ук�
 const emailConflictError = new ConflictError('Пользователь с таким email уже существует');
 const unauthorizedError = new UnauthorizedError('Неверный логин или пароль');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 // Create user:
 const createUser = (req, res, next) => {
   const {
@@ -61,7 +63,7 @@ const login = (req, res, next) => {
       // Generate token:
       const token = jwt.sign(
         { _id: user._id },
-        '83c00a96f2901e30ff4ae043acd0e4a9024aca3fd2cddd828b95bc4af003fed9',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
       res

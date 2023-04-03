@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -9,6 +11,8 @@ const { login, logout, createUser } = require('./controllers/users');
 const { NotFoundError } = require('./utils/errors/not-found');
 
 const pageNotFoundError = new NotFoundError('Запрашиваемая страница не найдена');
+
+const { DB_ADDRESS } = process.env;
 
 // creating app
 const app = express();
@@ -26,7 +30,7 @@ app.use(cors({
 }));
 
 // connecting to the Mongo server
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+mongoose.connect(DB_ADDRESS, {
   useNewUrlParser: true,
   // useCreateIndex: true,
   // useFindAndModify: false,
@@ -37,6 +41,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 // Sign-in:
 app.post('/signin', celebrate({
