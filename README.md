@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP-адресc 62.84.116.201
+IP-адресс 62.84.116.201
 
 Frontend https://mesto-service.nomoredomains.work/
 
