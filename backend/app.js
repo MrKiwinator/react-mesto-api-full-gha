@@ -12,8 +12,6 @@ const { NotFoundError } = require('./utils/errors/not-found');
 
 const pageNotFoundError = new NotFoundError('Запрашиваемая страница не найдена');
 
-const { DB_ADDRESS } = process.env;
-
 // creating app
 const app = express();
 
@@ -30,7 +28,7 @@ app.use(cors({
 }));
 
 // connecting to the Mongo server
-mongoose.connect(DB_ADDRESS, {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
   // useCreateIndex: true,
   // useFindAndModify: false,
