@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login, logout, createUser } = require('./controllers/users');
 const { NotFoundError } = require('./utils/errors/not-found');
 
@@ -34,6 +35,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 app.use(express.json());
 
 app.use(cookieParser());
+
+app.use(requestLogger);
 
 // Sign-in:
 app.post('/signin', celebrate({
@@ -70,6 +73,8 @@ app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
 app.all('*', (req, res, next) => next(pageNotFoundError));
+
+app.use(errorLogger);
 
 app.use(errors());
 
