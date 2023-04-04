@@ -80,7 +80,7 @@ const login = (req, res, next) => {
 
 // Logout
 const logout = (req, res, next) => {
-  res.clearCookie('jwt');
+  res.clearCookie('jwt').end();
   next(new InternalError('Произошла ошибка cервера'));
 };
 
