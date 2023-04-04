@@ -20,9 +20,6 @@
             "_id"
           ]
         }
-      ],
-      // if option below will be removed fully autotest will show an error
-      "no-console": [
       ]
     }
 }
