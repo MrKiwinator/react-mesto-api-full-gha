@@ -37,14 +37,10 @@ class Auth {
             })
     };
 
-    logout(userId) {
+    logout() {
         return fetch(`${this._url}/logout`, {
             method: "POST",
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userId }),
         })
             .then((res) => {
                 if (res.ok) {
