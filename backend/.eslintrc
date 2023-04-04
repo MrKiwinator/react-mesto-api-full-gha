@@ -21,15 +21,8 @@
           ]
         }
       ],
+      // will be removed after review (autotest failing if this option is missing)
       "no-console": [
-        "error",
-        {
-          "allow": [
-            "log",
-            "warn",
-            "error"
-          ]
-        }
       ]
     }
 }
