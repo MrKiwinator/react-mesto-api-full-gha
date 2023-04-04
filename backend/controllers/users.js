@@ -142,6 +142,10 @@ const updateUserInfo = (req, res, next) => {
     { runValidators: true, new: true },
   )
     .then((user) => {
+      if (!user) {
+        next(new NotFoundError('Пользователь по указанному _id не найден'));
+        return;
+      }
       res.status(200).send(user);
     })
     .catch((err) => {
@@ -163,6 +167,10 @@ const updateUserAvatar = (req, res, next) => {
     { runValidators: true, new: true },
   )
     .then((user) => {
+      if (!user) {
+        next(new NotFoundError('Пользователь по указанному _id не найден'));
+        return;
+      }
       res.status(200).send(user);
     })
     .catch((err) => {
