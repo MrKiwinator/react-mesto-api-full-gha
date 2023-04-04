@@ -22,7 +22,7 @@ router.post('/signin', celebrate({
 }), login);
 
 // Sign-out:
-router.get('/logout', logout);
+router.post('/logout', logout);
 
 // Create user:
 router.post('/signup', celebrate({
