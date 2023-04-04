@@ -7,14 +7,6 @@ const { NotFoundError } = require('../utils/errors/not-found');
 const { ConflictError } = require('../utils/errors/conflict');
 const { UnauthorizedError } = require('../utils/errors/unauthorized');
 
-// Creating errors:
-const internalError = new InternalError();
-const createBadRequestError = new BadRequestError('Переданы некорректные данные при создании пользователя');
-const findBadRequestError = new BadRequestError('Переданы некорректные данные при поиске пользователя');
-const userNotFoundError = new NotFoundError('Пользователь по указанному _id не найден');
-const emailConflictError = new ConflictError('Пользователь с таким email уже существует');
-const unauthorizedError = new UnauthorizedError('Неверный логин или пароль');
-
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 // Create user:
@@ -37,16 +29,16 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(createBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
         return;
       }
 
       if (err.code === 11000) {
-        next(emailConflictError);
+        next(new ConflictError('Пользователь с таким email уже существует'));
         return;
       }
 
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -68,29 +60,28 @@ const login = (req, res, next) => {
           maxAge: 3600000,
           sameSite: true,
         })
-        .send(user)
+        .send({
+          _id: user._id,
+          email: user.email,
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+        })
         .end();
     })
     .catch((err) => {
       if (err.name === 'UnauthorizedError') {
-        next(unauthorizedError);
+        next(new UnauthorizedError('Неверный логин или пароль'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
 // Logout
 const logout = (req, res, next) => {
-  const { userId } = req.body;
-
-  User.findById(userId)
-    .then(() => {
-      res
-        .clearCookie('jwt')
-        .end();
-    })
-    .catch(() => next(internalError));
+  res.clearCookie('jwt');
+  next(new InternalError('Произошла ошибка cервера'));
 };
 
 // Get current user:
@@ -101,13 +92,13 @@ const getCurrentUser = (req, res, next) => {
     .then((user) => {
       // Check if user exist:
       if (!user) {
-        next(userNotFoundError);
+        next(new NotFoundError('Пользователь по указанному _id не найден'));
         return;
       }
       res.status(200).send(user);
     })
     .catch(() => {
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -119,17 +110,17 @@ const getUserById = (req, res, next) => {
     .then((user) => {
       // Check if user exist:
       if (!user) {
-        next(userNotFoundError);
+        next(new NotFoundError('Пользователь по указанному _id не найден'));
         return;
       }
       res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(findBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при поиске пользователя'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -139,7 +130,7 @@ const getUsers = (req, res, next) => {
     .then((users) => {
       res.status(200).send(users);
     })
-    .catch(() => next(internalError));
+    .catch(() => next(new InternalError('Произошла ошибка cервера')));
 };
 
 // Update user info:
@@ -156,10 +147,10 @@ const updateUserInfo = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(createBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при редактировании пользователя'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -177,10 +168,10 @@ const updateUserAvatar = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(createBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при создании аватара'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 

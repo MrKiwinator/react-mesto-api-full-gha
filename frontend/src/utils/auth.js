@@ -37,14 +37,10 @@ class Auth {
             })
     };
 
-    logout(userId) {
+    logout() {
         return fetch(`${this._url}/logout`, {
-            method: "POST",
+            method: "GET",
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userId }),
         })
             .then((res) => {
                 if (res.ok) {
@@ -56,8 +52,8 @@ class Auth {
 }
 
 // local:
-// const auth = new Auth ("http://localhost:3000");
+const auth = new Auth ("http://localhost:3000");
 // server:
-const auth = new Auth ("https://api.mesto-service.nomoredomains.work");
+// const auth = new Auth ("https://api.mesto-service.nomoredomains.work");
 
 export default auth;

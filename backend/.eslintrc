@@ -1,7 +1,7 @@
 {
     "env": {
-        "browser": true,
-        "commonjs": true,
+        // "browser": true,
+        // "commonjs": true,
         "es2021": true
     },
     "extends": [
@@ -21,6 +21,8 @@
           ]
         }
       ],
+      // if this setting will be switched off
+      // eslint start showing errors when console used
       "no-console": [
         "error",
         {

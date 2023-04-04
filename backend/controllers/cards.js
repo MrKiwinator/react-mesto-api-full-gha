@@ -4,14 +4,6 @@ const { InternalError } = require('../utils/errors/internal');
 const { NotFoundError } = require('../utils/errors/not-found');
 const { ForbiddenError } = require('../utils/errors/forbidden');
 
-// Creating errors:
-const internalError = new InternalError('Произошла ошибка');
-const createBadRequestError = new BadRequestError('Переданы некорректные данные при создании карточки');
-const likeBadRequestError = new BadRequestError('Переданы некорректные данные для постановки / снятия лайка');
-const findBadRequestError = new BadRequestError('Переданы некорректные данные при поиске карточки');
-const notFoundError = new NotFoundError('Передан несуществующий _id карточки');
-const cardForbiddenError = new ForbiddenError('Нет доступа к запрашиваемой карточке');
-
 // Create card
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -20,14 +12,14 @@ const createCard = (req, res, next) => {
 
   Card.create({ name, link, owner })
     .then((card) => {
-      res.status(200).send(card);
+      res.status(201).send({ card });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(createBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при создании карточки'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -39,7 +31,7 @@ const getCards = (req, res, next) => {
     .then((cards) => {
       res.status(200).send(cards);
     })
-    .catch(() => next(internalError));
+    .catch(() => next(new InternalError('Произошла ошибка cервера')));
 };
 
 // Delete card
@@ -50,27 +42,24 @@ const deleteCard = (req, res, next) => {
     .then((card) => {
       // Check if card exist:
       if (!card) {
-        next(notFoundError);
+        next(new NotFoundError('Передан несуществующий _id карточки'));
         return;
       }
       // Check if user is owner of card:
       if (userId !== card.owner.toString()) {
-        next(cardForbiddenError);
+        next(new ForbiddenError('Нет доступа к запрашиваемой карточке'));
         return;
       }
       // If card exist and user it's owner - delete card:
-      Card.findByIdAndRemove(req.params.id)
-        .then((c) => {
-          res.status(200).send(c);
-        })
-        .catch(() => next(internalError));
+      card.deleteOne();
+      res.status(200).send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(findBadRequestError);
+        next(new BadRequestError('Переданы некорректные данные при поиске карточки'));
         return;
       }
-      next(internalError);
+      next(new InternalError('Произошла ошибка cервера'));
     });
 };
 
@@ -84,19 +73,13 @@ const likeCard = (req, res, next) => {
     .then((card) => {
       // Check if card exist:
       if (!card) {
-        next(notFoundError);
+        next(new NotFoundError('Передан несуществующий _id карточки'));
         return;
       }
       // Return liked card to user:
       res.status(200).send(card);
     })
-    .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        next(likeBadRequestError);
-        return;
-      }
-      next(internalError);
-    });
+    .catch(() => next(new InternalError('Произошла ошибка cервера')));
 };
 
 // Dislike card
@@ -109,19 +92,13 @@ const dislikeCard = (req, res, next) => {
     .then((card) => {
       // Check if card exist:
       if (!card) {
-        next(notFoundError);
+        next(new NotFoundError('Передан несуществующий _id карточки'));
         return;
       }
       // Return disliked card to user:
       res.status(200).send(card);
     })
-    .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        next(likeBadRequestError);
-        return;
-      }
-      next(internalError);
-    });
+    .catch(() => next(new InternalError('Произошла ошибка cервера')));
 };
 
 module.exports = {

@@ -3,7 +3,6 @@ class InternalError extends Error {
     super();
     this.name = 'InternalError';
     this.statusCode = 500;
-    this.message = 'Произошла ошибка сервера';
   }
 }
 
