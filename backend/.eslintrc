@@ -20,6 +20,16 @@
             "_id"
           ]
         }
+      ],
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "log",
+            "warn",
+            "error"
+          ]
+        }
       ]
     }
 }
