@@ -59,7 +59,7 @@ const deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные при удалении карточки'));
+        next(new BadRequestError('Невалидный id карточки'));
         return;
       }
       next(new InternalError('Произошла ошибка cервера'));
@@ -84,7 +84,7 @@ const likeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные при постановке лайка'));
+        next(new BadRequestError('Невалидный id карточки'));
         return;
       }
       next(new InternalError('Произошла ошибка cервера'));
@@ -109,7 +109,7 @@ const dislikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные при снятии лайка'));
+        next(new BadRequestError('Невалидный id карточки'));
         return;
       }
       next(new InternalError('Произошла ошибка cервера'));
