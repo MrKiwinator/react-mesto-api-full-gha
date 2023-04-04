@@ -79,9 +79,8 @@ const login = (req, res, next) => {
 };
 
 // Logout
-const logout = (req, res, next) => {
+const logout = (req, res) => {
   res.clearCookie('jwt').end();
-  next(new InternalError('Произошла ошибка cервера'));
 };
 
 // Get current user:
