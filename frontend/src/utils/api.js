@@ -107,9 +107,9 @@ class Api {
 
 const api = new Api({
     // for local:
-    baseUrl: "http://localhost:3000",
+    // baseUrl: "http://localhost:3000",
     // for server:
-    // baseUrl: "https://api.mesto-service.nomoredomains.work",
+    baseUrl: "https://api.mesto-service.nomoredomains.work",
     credentials: "include",
     headers: {
         'Content-Type': 'application/json',
