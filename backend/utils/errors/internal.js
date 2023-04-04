@@ -1,6 +1,6 @@
 class InternalError extends Error {
-  constructor() {
-    super();
+  constructor(message) {
+    super(message);
     this.name = 'InternalError';
     this.statusCode = 500;
   }

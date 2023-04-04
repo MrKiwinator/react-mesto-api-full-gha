@@ -20,18 +20,16 @@
             "_id"
           ]
         }
-      ],
-      // if this setting will be switched off
-      // eslint start showing errors when console used
-      "no-console": [
-        "error",
-        {
-          "allow": [
-            "log",
-            "warn",
-            "error"
-          ]
-        }
       ]
+      // "no-console": [
+      //   "error",
+      //   {
+      //     "allow": [
+      //       "log",
+      //       "warn",
+      //       "error"
+      //     ]
+      //   }
+      // ]
     }
 }

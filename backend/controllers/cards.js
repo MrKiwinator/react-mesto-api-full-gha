@@ -51,8 +51,11 @@ const deleteCard = (req, res, next) => {
         return;
       }
       // If card exist and user it's owner - delete card:
-      card.deleteOne();
-      res.status(200).send(card);
+      card.deleteOne()
+        .then(() => {
+          res.status(200).send(card);
+        })
+        .catch(() => new InternalError('Произошла ошибка cервера'));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
